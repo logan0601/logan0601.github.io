@@ -2,62 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://example.com/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/diffusion/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/diffusion/ddpm/</loc>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/graphics/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/graphics/ray_tracing/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/math/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/math/differential_equation/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/math/differential_equation/inference/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/math/differential_equation/kolmogorov/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/math/differential_equation/ode/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/math/differential_equation/sde/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/math/probability_theory/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/scores/score_based_model/</loc>
-         <lastmod>2022-12-07</lastmod>
+         <lastmod>2023-01-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
