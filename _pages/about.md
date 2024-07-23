@@ -17,42 +17,63 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. Suspendisse condimentum, libero vel tempus mattis, risus risus vulputate libero, elementum fermentum mi neque vel nisl. Maecenas facilisis maximus dignissim. Curabitur mattis vulputate dui, tincidunt varius libero luctus eu. Mauris mauris nulla, scelerisque eget massa id, tincidunt congue felis. Sed convallis tempor ipsum rhoncus viverra. Pellentesque nulla orci, accumsan volutpat fringilla vitae, maximus sit amet tortor. Aliquam ultricies odio ut volutpat scelerisque. Donec nisl nisl, porttitor vitae pharetra quis, fringilla sed mi. Fusce pretium dolor ut aliquam consequat. Cras volutpat, tellus accumsan mattis molestie, nisl lacus tempus massa, nec malesuada tortor leo vel quam. Aliquam vel ex consectetur, vehicula leo nec, efficitur eros. Donec convallis non urna quis feugiat.
+Hi there 👋.
 
-My research interest includes neural machine translation and computer vision. I have published more than 100 papers at the top international AI conferences with total <a href='https://scholar.google.com/citations?user=DhtAFkwAAAAJ'>google scholar citations <strong><span id='total_cit'>260000+</span></strong></a> (You can also use google scholar badge <a href='https://scholar.google.com/citations?user=DhtAFkwAAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>).
+I am currently a PhD student in the Department of Computer Science and Technology at Tsinghua University.
+
+My research interest lies in 3D generation, computer graphics and computer vision. 
 
 
-# 🔥 News
-- *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2022.02*: &nbsp;🎉🎉 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+# 📖 Education
+- *2022.09 - present*, PhD student, Department of Computer Science and Technology, Tsinghua University
+- *2018.09 - 2022.06*, B.Sc, Department of Computer Science and Technology, Tsinghua University
+
+# 🔬 Lab
+- *2020.09 - Present*, [Graphics and Geometric Computing Group (G2)](https://cg.cs.tsinghua.edu.cn/), Tsinghua University, China
 
 # 📝 Publications 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
+<a href='https://scholar.google.com/citations?user=xvOPuFcAAAAJ&hl'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Acta Psychologica 2024</div><img src='images/Childhood.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
-[Deep Residual Learning for Image Recognition](https://openaccess.thecvf.com/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf)
+[Childhood environmental unpredictability and hoarding: Mediating roles of attachment and security](https://doi.org/10.1016/j.actpsy.2024.104198)
 
-**Kaiming He**, Xiangyu Zhang, Shaoqing Ren, Jian Sun
+Hang Ma<sup>1</sup>, **Yuhang Wu<sup>1</sup>**, Xiaojun Lv, Xiaofan Yang, Ping Hu
 
-[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DI1-2PwAAAAJ&authuser=1&citation_for_view=DI1-2PwAAAAJ:qjMakFHDy7sC) <strong><span class='show_paper_citations' data='DI1-2PwAAAAJ:qjMakFHDy7sC'></span></strong>
+-  We embrace a multi-level theoretical integration, incorporating life history theory, psychosocial acceleration theory, attachment theory, cognitive-behavioral models, and compensation theory, to explore the key roles of childhood environmental unpredictability, attachment, and sense of security in the development of hoarding. 🔥
 </div>
 </div>
 
-- [Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet](https://github.com), A, B, C, **CVPR 2020**
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Brain Sciences 2023</div><img src='images/EEGmimicry.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
 
-# 🎖 Honors and Awards
-- *2021.10* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.09* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+[The Neural Mechanisms of Group Membership Effect on Emotional Mimicry: A Multimodal Study Combining Electromyography and Electroencephalography](https://doi.org/10.3390/brainsci14010025)
 
-# 📖 Educations
-- *2019.06 - 2022.04 (now)*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2015.09 - 2019.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+Beibei Kuang, Shenli Peng, **Yuhang Wu**, Ying ChenXiao, Ping Hu
 
-# 💬 Invited Talks
-- *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/)
+[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DI1-2PwAAAAJ&authuser=1&citation_for_view=DI1-2PwAAAAJ:2osOgNQ5qMEC) <strong><span class='show_paper_citations' data='DI1-2PwAAAAJ:2osOgNQ5qMEC'></span></strong>
+-  We explored whether and how group membership modulated emotional mimicry using a multimodal method combining facial electromyography (fEMG) and electroencephalography (EEG). 🔥
+</div>
+</div>
 
-# 💻 Internships
-- *2019.05 - 2020.02*, [Lorem](https://github.com/), China.
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV 2023 Workshop</div><img src='images/threestudio.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[Threestudio: A unified framework for 3d content generation](https://github.com/threestudio-project/threestudio)
+
+Yuan-Chen Guo, Ying-Tian Liu, Ruizhi Shao, Christian Laforte, Vikram Voleti, **Guan Luo**, Chia-Hao Chen, Zi-Xin Zou, Chen Wang, Yan-Pei Cao, Song-Hai Zhang
+
+[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=xvOPuFcAAAAJ&authuser=1&citation_for_view=xvOPuFcAAAAJ:u5HHmVD_uO8C) <strong><span class='show_paper_citations' data='xvOPuFcAAAAJ:u5HHmVD_uO8C'></span></strong>
+
+-   We introduce threestudio, an open-source, unified, and modular framework specifically designed for 3D content generation. This framework extends diffusion-based 2D image generation models to 3D generation guidance while incorporating conditions such as text and images. We delineate the modular architecture and design of each component within threestudio. 
+</div>
+</div>
+
+
+
+<hr />
+
+Last updated: 24/07/2024
