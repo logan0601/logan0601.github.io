@@ -35,27 +35,27 @@ My research interest lies in 3D generation, computer graphics and computer visio
 
 <a href='https://scholar.google.com/citations?user=xvOPuFcAAAAJ&hl'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Acta Psychologica 2024</div><img src='images/Childhood.png' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ACM MM 2024</div><img src='images/gsedit.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
-[Childhood environmental unpredictability and hoarding: Mediating roles of attachment and security](https://doi.org/10.1016/j.actpsy.2024.104198)
+[3D Gaussian Editing With A Single Image]()
 
-Hang Ma<sup>1</sup>, **Yuhang Wu<sup>1</sup>**, Xiaojun Lv, Xiaofan Yang, Ping Hu
+**Guan Luo**, Tian-xing Xu, Ying-tian Liu, Xiao-xiong Fan, Fang-lue Zhang, Song-hai Zhang
 
-[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DI1-2PwAAAAJ&authuser=1&citation_for_view=DI1-2PwAAAAJ:qjMakFHDy7sC) <strong><span class='show_paper_citations' data='DI1-2PwAAAAJ:qjMakFHDy7sC'></span></strong>
--  We embrace a multi-level theoretical integration, incorporating life history theory, psychosocial acceleration theory, attachment theory, cognitive-behavioral models, and compensation theory, to explore the key roles of childhood environmental unpredictability, attachment, and sense of security in the development of hoarding. 🔥
+[**Project**]() <strong><span class='show_paper_citations' data=''></span></strong>
+-  we introduce a novel single-image-driven 3D scene editing approach based on 3D Gaussian Splatting, enabling intuitive manipulation via directly editing the content on a 2D image plane. Our method learns to optimize the 3D Gaussians to align with an edited version of the image rendered from a user-specified viewpoint of the original scene.
 </div>
 </div>
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Brain Sciences 2023</div><img src='images/EEGmimicry.png' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2024</div><img src='images/pi3d.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
-[The Neural Mechanisms of Group Membership Effect on Emotional Mimicry: A Multimodal Study Combining Electromyography and Electroencephalography](https://doi.org/10.3390/brainsci14010025)
+[Pi3d: Efficient text-to-3d generation with pseudo-image diffusion](https://openaccess.thecvf.com/content/CVPR2024/papers/Liu_PI3D_Efficient_Text-to-3D_Generation_with_Pseudo-Image_Diffusion_CVPR_2024_paper.pdf)
 
-Beibei Kuang, Shenli Peng, **Yuhang Wu**, Ying ChenXiao, Ping Hu
+Ying-Tian Liu, **Guan Luo**, Heyi Sun, Yuan-Chen Guo, Wei Yin, Song-Hai Zhang
 
-[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DI1-2PwAAAAJ&authuser=1&citation_for_view=DI1-2PwAAAAJ:2osOgNQ5qMEC) <strong><span class='show_paper_citations' data='DI1-2PwAAAAJ:2osOgNQ5qMEC'></span></strong>
--  We explored whether and how group membership modulated emotional mimicry using a multimodal method combining facial electromyography (fEMG) and electroencephalography (EEG). 🔥
+[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=xvOPuFcAAAAJ&citation_for_view=xvOPuFcAAAAJ:u-x6o8ySG0sC) <strong><span class='show_paper_citations' data='xvOPuFcAAAAJ:u-x6o8ySG0sC'></span></strong>
+-  We present PI3D, a framework that fully leverages the pre-trained text-to-image diffusion models’ ability to generate high-quality 3D shapes from text prompts in minutes. The core idea is to connect the 2D and 3D domains by representing a 3D shape as a set of Pseudo RGB Images. 
 </div>
 </div>
 
