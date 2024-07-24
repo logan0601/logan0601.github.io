@@ -29,7 +29,7 @@ My research interest lies in 3D generation, computer graphics and computer visio
 - *2018.09 - 2022.06*, B.Sc, Department of Computer Science and Technology, Tsinghua University
 
 # 🔬 Lab
-- *2020.09 - Present*, [Graphics and Geometric Computing Group (G2)](https://cg.cs.tsinghua.edu.cn/), Tsinghua University, China
+- *2021.09 - Present*, [Graphics and Geometric Computing Group (G2)](https://cg.cs.tsinghua.edu.cn/), Tsinghua University, China
 
 # 📝 Publications 
 
