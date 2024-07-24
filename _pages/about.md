@@ -40,7 +40,7 @@ My research interest lies in 3D generation, computer graphics and computer visio
 
 [3D Gaussian Editing With A Single Image]()
 
-**Guan Luo**, Tian-xing Xu, Ying-tian Liu, Xiao-xiong Fan, Fang-lue Zhang, Song-hai Zhang
+**Guan Luo**, Tian-Xing Xu, Ying-Tian Liu, Xiao-Xiong Fan, Fang-Lue Zhang, Song-Hai Zhang
 
 [**Project**]() <strong><span class='show_paper_citations' data=''></span></strong>
 -  we introduce a novel single-image-driven 3D scene editing approach based on 3D Gaussian Splatting, enabling intuitive manipulation via directly editing the content on a 2D image plane. Our method learns to optimize the 3D Gaussians to align with an edited version of the image rendered from a user-specified viewpoint of the original scene.
