@@ -61,7 +61,6 @@ Ying-Tian Liu, **Guan Luo**, Heyi Sun, Yuan-Chen Guo, Wei Yin, Song-Hai Zhang
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV 2023 Workshop</div><img src='images/threestudio.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
-
 [Threestudio: A unified framework for 3d content generation](https://github.com/threestudio-project/threestudio)
 
 Yuan-Chen Guo, Ying-Tian Liu, Ruizhi Shao, Christian Laforte, Vikram Voleti, **Guan Luo**, Chia-Hao Chen, Zi-Xin Zou, Chen Wang, Yan-Pei Cao, Song-Hai Zhang
@@ -71,6 +70,10 @@ Yuan-Chen Guo, Ying-Tian Liu, Ruizhi Shao, Christian Laforte, Vikram Voleti, **G
 -   We introduce threestudio, an open-source, unified, and modular framework specifically designed for 3D content generation. This framework extends diffusion-based 2D image generation models to 3D generation guidance while incorporating conditions such as text and images. We delineate the modular architecture and design of each component within threestudio. 
 </div>
 </div>
+
+# 📖 Notes
+
+[Stochastic Differential Equations](./Stochastic_Differential_Equations.pdf)
 
 
 
