@@ -37,8 +37,7 @@ My research interest lies in 3D generation, computer graphics and computer visio
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ACM MM 2024</div><img src='images/gsedit.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
-
-[3D Gaussian Editing With A Single Image]()
+[3D Gaussian Editing With A Single Image](https://arxiv.org/abs/2408.07540)
 
 **Guan Luo**, Tian-Xing Xu, Ying-Tian Liu, Xiao-Xiong Fan, Fang-Lue Zhang, Song-Hai Zhang
 
@@ -49,7 +48,6 @@ My research interest lies in 3D generation, computer graphics and computer visio
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2024</div><img src='images/pi3d.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
-
 [Pi3d: Efficient text-to-3d generation with pseudo-image diffusion](https://openaccess.thecvf.com/content/CVPR2024/papers/Liu_PI3D_Efficient_Text-to-3D_Generation_with_Pseudo-Image_Diffusion_CVPR_2024_paper.pdf)
 
 Ying-Tian Liu, **Guan Luo**, Heyi Sun, Yuan-Chen Guo, Wei Yin, Song-Hai Zhang
