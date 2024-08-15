@@ -73,7 +73,7 @@ Yuan-Chen Guo, Ying-Tian Liu, Ruizhi Shao, Christian Laforte, Vikram Voleti, **G
 
 # 📖 Notes
 
-[Stochastic Differential Equations](./Stochastic_Differential_Equations.pdf)
+[Stochastic Differential Equations](../notes/Stochastic_Differential_Equations.pdf)
 
 
 
