@@ -72,7 +72,9 @@ Yuan-Chen Guo, Ying-Tian Liu, Ruizhi Shao, Christian Laforte, Vikram Voleti, **G
 
 # 📖 Notes
 
-[Stochastic Differential Equation and Diffusion Models](../notes/Stochastic_Differential_Equations.pdf)
+[Stochastic Differential Equations and Diffusion Models](../notes/Stochastic_Differential_Equations.pdf)
+
+[Differential Manifolds[Up to Chapter1.2]](../notes/Differential_Manifold.pdf)
 
 
 
