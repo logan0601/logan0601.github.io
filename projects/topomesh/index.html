@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopoMesh: High-Fidelity Mesh Autoencoding</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.6/css/academicons.min.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+
+    <style>
+        /* --- GLOBAL STYLES --- */
+        body { margin: 0; padding: 0; background-color: #121212; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .hero { position: relative; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background-image: url('images/teaser.png'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); }
+        .hero-content { max-width: 900px; margin: 0 auto; z-index: 1; position: relative; }
+        .author-block { margin-top: 25px; font-size: 1.3rem; line-height: 1.6; }
+        .author-name { color: #ffffff; text-decoration: none; margin: 0 12px; display: inline-block; transition: color 0.2s; }
+        .author-name:hover { color: #4da6ff; }
+        .affiliation-block { margin-top: 20px; font-size: 1.1rem; color: #cccccc; }
+        .affiliation-item { margin: 0 15px; white-space: nowrap; }
+        sup { font-size: 0.8em; margin-left: 2px; color: #4da6ff; }
+        .project-links { margin-top: 35px; display: flex; gap: 20px; justify-content: center; }
+        .action-btn { display: inline-flex; align-items: center; text-decoration: none; font-weight: bold; padding: 12px 25px; border-radius: 6px; transition: transform 0.2s, opacity 0.2s; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); }
+        .action-btn i { margin-right: 8px; font-size: 1.2em; }
+        .github-btn { background-color: #24292e; color: white; }
+        .github-btn:hover { background-color: #40464d; transform: scale(1.05); }
+        .arxiv-btn { background-color: #1bb3a4; color: white; }
+        .arxiv-btn:hover { background-color: #06b8a6; transform: scale(1.05); }
+        .section-container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 40px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+        .video-wrapper { max-width: 100%; margin: 0 auto; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); background-color: #000; }
+        .video-wrapper video { width: 100%; height: auto; display: block; }
+        .model-section-wrapper { position: relative; }
+        .model-scroll-container { display: flex; overflow-x: auto; padding: 20px 0; gap: 30px; scroll-snap-type: x mandatory; overflow-x: hidden; }
+        .scroll-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background-color: rgba(0, 0, 0, 0.7); color: white; border: none; padding: 15px 10px; cursor: pointer; font-size: 1.5rem; border-radius: 4px; transition: background-color 0.2s, color 0.2s; }
+        .scroll-btn:hover { background-color: rgba(77, 166, 255, 0.9); color: black; }
+        #scrollLeft, #scrollLeft2 { left: 0; }
+        #scrollRight, #scrollRight2 { right: 0; }
+        .model-card { flex-shrink: 0; width: 450px; height: 450px; background-color: #1e1e1e; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); scroll-snap-align: center; position: relative; }
+        model-viewer { width: 100%; height: 100%; border-radius: 8px; --progress-bar-color: transparent; }
+        .poster-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.1); color: rgba(255, 255, 255, 0.9); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-sizing: border-box; }
+        .poster-content:hover { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); }
+        .poster-icon { font-size: 3rem; margin-bottom: 10px; }
+        .poster-text { font-size: 1.2rem; font-weight: bold; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px; }
+
+        .poster-with-bg { position: relative; overflow: hidden; background: none; }
+        .poster-with-bg::before { content: ''; position: absolute; inset: 0; background-image: var(--bg-image); background-size: cover; background-position: center; transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out; }
+        .poster-with-bg:hover::before { filter: blur(4px); transform: scale(1.05); }
+        .poster-with-bg .poster-icon,
+        .poster-with-bg .poster-text { opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; position: relative; z-index: 1; }
+        .poster-with-bg:hover .poster-icon,
+        .poster-with-bg:hover .poster-text { opacity: 1; transform: translateY(0); }
+        .poster-with-bg:hover { background-color: rgba(0, 0, 0, 0.4); transition: background-color 0.3s ease-in-out; }
+
+        .grid-images { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .gallery-img { max-width: 100%; width: 1200px; height: auto; border-radius: 8px; transition: transform 0.3s; }
+        .gallery-img:hover { transform: scale(1.02); }
+        .tab-navigation { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 5px; }
+        .tab-button { background: none; border: none; color: #cccccc; padding: 10px 20px; cursor: pointer; font-size: 1.1rem; border-bottom: 3px solid transparent; }
+        .tab-button:hover { color: #ffffff; }
+        .tab-button.active { color: #4da6ff; border-bottom-color: #4da6ff; font-weight: bold; }
+        .tab-content { display: none; padding: 30px 20px; background-color: #1e1e1e; border-radius: 8px; line-height: 1.6; }
+        .tab-content.active { display: block; }
+        #bibtex-code { background-color: #2d2d2d; color: #f0f0f0; padding: 15px; border-radius: 4px; overflow-x: auto; font-size: 0.95rem; line-height: 1.4; white-space: pre-wrap; }
+
+        /* --- MODAL / LIGHTBOX STYLES --- */
+        .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed; 
+            z-index: 9999; 
+            left: 0; top: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            background-color: rgba(0,0,0,0.85);
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        .modal.show { opacity: 1; }
+        .close-modal {
+            position: absolute; top: 20px; right: 35px;
+            color: #f1f1f1; font-size: 50px; font-weight: bold;
+            cursor: pointer; z-index: 10000; transition: 0.3s; line-height: 1;
+        }
+        .close-modal:hover { color: #4da6ff; }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>TopoMesh: High-Fidelity Mesh Autoencoding via Topological Unification</h1>
+            <div class="author-block">
+                <a href="https://logan0601.github.io/" class="author-name">Guan Luo<sup>1,2</sup></a>
+                <a href="https://lixiulive.com/" class="author-name">Xiu Li<sup>2</sup></a>
+                <a href="https://aruichen.github.io/" class="author-name">Rui Chen<sup>2,3</sup></a>
+                <a href="https://yxymessi.github.io/" class="author-name">Xuanyu Yi<sup>2</sup></a>
+                <br>
+                <a href="https://jinglin7.github.io/" class="author-name">Jing Lin<sup>2</sup></a>
+                <a href="https://openreview.net/profile?id=~Chia_Hao_Chen1" class="author-name">Chia-Hao Chen<sup>1</sup></a>
+                <a href="https://scholar.google.com/citations?hl=zh-CN&user=xqc0SiYAAAAJ" class="author-name">Jiahang Liu<sup>2</sup></a>
+                <br>
+                <a href="https://scholar.google.com/citations?user=AWtV-EQAAAAJ&hl=en" class="author-name">Song-Hai Zhang<sup>1†</sup></a>
+                <a href="https://jfzhang95.github.io/" class="author-name">Jianfeng Zhang<sup>2†</sup></a>
+            </div>
+
+            <div class="affiliation-block">
+                <span class="affiliation-item"><sup>1</sup>Tsinghua University</span>
+                <span class="affiliation-item"><sup>2</sup>ByteDance Seed</span>
+                <span class="affiliation-item"><sup>3</sup>HKUST</span>
+            </div>
+            <div class="project-links">
+                <a href="#" class="action-btn arxiv-btn"><i class="ai ai-arxiv"></i> Paper</a>
+                <a href="#" class="action-btn github-btn"><i class="fab fa-github"></i> Code</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section-container" style="padding-bottom: 10px;">
+        <h2 class="section-title">Demo</h2>
+        <div class="video-wrapper">
+            <video controls playsinline muted autoplay>
+                <source src="images/demo.mp4" type="video/mp4">
+            </video>
+        </div>
+    </section>
+
+    <!-- GALLERY 1: REMESH -->
+    <section class="section-container" style="padding-bottom: 10px;">
+        <h2 class="section-title">Remesh Gallery</h2>
+        <div class="model-section-wrapper">
+            <div class="model-scroll-container" id="modelScroller">
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/021f7329180d4c4996e06cf6280dc0e0.png');"
+                                onclick="openModel('glbs/remesh/021f7329180d4c4996e06cf6280dc0e0.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/0aecee43ac2749499a16ab4388a0baa2.png');"
+                                onclick="openModel('glbs/remesh/0aecee43ac2749499a16ab4388a0baa2.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/2c0a77d912c44dc7a1e94b5b440b9eb5.png');"
+                                onclick="openModel('glbs/remesh/2c0a77d912c44dc7a1e94b5b440b9eb5.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/0002c6eafa154e8bb08ebafb715a8d46.png');"
+                                onclick="openModel('glbs/remesh/0002c6eafa154e8bb08ebafb715a8d46.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/b6395bb0279d4a4891ca79ce0fd24d53.png');"
+                                onclick="openModel('glbs/remesh/b6395bb0279d4a4891ca79ce0fd24d53.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/5a63e69b6469487ebee813c9120fe5b7.png');"
+                                onclick="openModel('glbs/remesh/5a63e69b6469487ebee813c9120fe5b7.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/0a2e65dcc51f4216a632c36adb8953fc.png');"
+                                onclick="openModel('glbs/remesh/0a2e65dcc51f4216a632c36adb8953fc.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/33de6503828c42e38ce6f00a35391978.png');"
+                                onclick="openModel('glbs/remesh/33de6503828c42e38ce6f00a35391978.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/205c61338af64213807be89fafe7c02b.png');"
+                                onclick="openModel('glbs/remesh/205c61338af64213807be89fafe7c02b.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/thing-1145123-file-0000001.png');"
+                                onclick="openModel('glbs/remesh/thing-1145123-file-0000001.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/f5632a859b9b4ce0b67aa5010f3b3820.png');"
+                                onclick="openModel('glbs/remesh/f5632a859b9b4ce0b67aa5010f3b3820.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/github-3f4ef911-4658-5e20-bdd4-61473545a9b3_frame174.png');"
+                                onclick="openModel('glbs/remesh/github-3f4ef911-4658-5e20-bdd4-61473545a9b3_frame174.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/d0618ac16b2a4a87b9b6c7d5e6765626.png');"
+                                onclick="openModel('glbs/remesh/d0618ac16b2a4a87b9b6c7d5e6765626.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/3e4c6fda4a0a43be81d87edd44182351.png');"
+                                onclick="openModel('glbs/remesh/3e4c6fda4a0a43be81d87edd44182351.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/remesh/4b74877de96b4bf0acef064c2028ccb3.png');"
+                                onclick="openModel('glbs/remesh/4b74877de96b4bf0acef064c2028ccb3.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <button id="scrollLeft" class="scroll-btn">&lt;</button>
+                <button id="scrollRight" class="scroll-btn">&gt;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY 2: VAE -->
+    <section class="section-container" style="padding-bottom: 10px;">
+        <h2 class="section-title">Reconstruction Gallery</h2>
+        <div class="model-section-wrapper">
+            <div class="model-scroll-container" id="modelScroller2">
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/1a02a32961c74605901d571fbf146b4d.png');"
+                                onclick="openModel('glbs/vae/1a02a32961c74605901d571fbf146b4d.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+                
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/0e5ff70e6d764e45a7bbe9e6f46919ae.png');"
+                                onclick="openModel('glbs/vae/0e5ff70e6d764e45a7bbe9e6f46919ae.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/4ff143798a5a41ce80944d52bb34bb61.png');"
+                                onclick="openModel('glbs/vae/4ff143798a5a41ce80944d52bb34bb61.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/97393bea9d8f4a84831e750c25a8bddb.png');"
+                                onclick="openModel('glbs/vae/97393bea9d8f4a84831e750c25a8bddb.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/b6f4adbef70549d0852f7ed96ed0b371.png');"
+                                onclick="openModel('glbs/vae/b6f4adbef70549d0852f7ed96ed0b371.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/0a3e50926ca64400be27f4316f746b29.png');"
+                                onclick="openModel('glbs/vae/0a3e50926ca64400be27f4316f746b29.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/1d3695c029644ac8bcb43dbcba2b5b97.png');"
+                                onclick="openModel('glbs/vae/1d3695c029644ac8bcb43dbcba2b5b97.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/1dc02d32af6b4f31911bad413c4909d2.png');"
+                                onclick="openModel('glbs/vae/1dc02d32af6b4f31911bad413c4909d2.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/2cb7803bdd344da4954df55ed15f3c00.png');"
+                                onclick="openModel('glbs/vae/2cb7803bdd344da4954df55ed15f3c00.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/4fc067f8892446eca7494cda497545bf.png');"
+                                onclick="openModel('glbs/vae/4fc067f8892446eca7494cda497545bf.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/6b7d44f26f11402f9d424ed0b114daf5.png');"
+                                onclick="openModel('glbs/vae/6b7d44f26f11402f9d424ed0b114daf5.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/17f0f0667f544accb77501ec3dc7d5bd.png');"
+                                onclick="openModel('glbs/vae/17f0f0667f544accb77501ec3dc7d5bd.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/1159219dc3424a0fa818b66f9dfc68cc.png');"
+                                onclick="openModel('glbs/vae/1159219dc3424a0fa818b66f9dfc68cc.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/94db222082374a4595d9b3970c04b666.png');"
+                                onclick="openModel('glbs/vae/94db222082374a4595d9b3970c04b666.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/dd52c61041f04f27a613488893082e29.png');"
+                                onclick="openModel('glbs/vae/dd52c61041f04f27a613488893082e29.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/837f7d60c57e4f20a0046d3808791462.png');"
+                                onclick="openModel('glbs/vae/837f7d60c57e4f20a0046d3808791462.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <div class="model-card">
+                    <model-viewer src="" reveal="manual" style="background-color: #222;">
+                        <div slot="poster" class="poster-content poster-content poster-with-bg"
+                                style="--bg-image: url('images/thumbnails/vae/0b3b2ce2ac174d0591d98962ec70f9d4.png');"
+                                onclick="openModel('glbs/vae/0b3b2ce2ac174d0591d98962ec70f9d4.glb')">
+                            <i class="fas fa-expand-arrows-alt poster-icon"></i>
+                            <div class="poster-text">Click to Expand</div>
+                        </div>
+                    </model-viewer>
+                </div>
+
+                <button id="scrollLeft2" class="scroll-btn">&lt;</button>
+                <button id="scrollRight2" class="scroll-btn">&gt;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FRAMEWORK IMAGE -->
+    <section class="section-container" style="background-color: #181818;">
+        <h2 class="section-title">TopoMesh Framework</h2>
+        <div class="grid-images">
+            <!-- 限制了宽度为 1100px -->
+            <img src="images/pipeline1.png" class="gallery-img" alt="Pipeline" style="width: 1100px; max-width: 100%;">
+        </div>
+    </section>
+
+    <!-- COMPARISON SECTIONS -->
+    <section class="section-container" style="background-color: #181818;">
+        <h2 class="section-title">Remesh Comparison</h2>
+        <div class="grid-images">
+            <img src="images/comparison1.png" class="gallery-img" alt="Comparison 1">
+        </div>
+    </section>
+
+    <section class="section-container" style="background-color: #181818;">
+        <h2 class="section-title">Reconstruction Comparison</h2>
+        <div class="grid-images">
+            <img src="images/comparison2.png" class="gallery-img" alt="Comparison 2">
+        </div>
+    </section>
+
+    <section class="section-container" style="background-color: #181818;">
+        <h2 class="section-title">Generation Comparison</h2>
+        <div class="grid-images">
+            <img src="images/comparison3.png" class="gallery-img" alt="Comparison 3">
+        </div>
+    </section>
+
+    <section class="section-container" style="padding-top: 30px;">
+        <h2>Bibtex</h2>
+        <div class="bibtex-container"></div>
+    </section>
+
+
+    <!-- ============ Modal (全屏查看器) HTML ============ -->
+    <!-- 把它放在 body 结束标签之前，Script 标签之外 -->
+    <div id="modelModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <!-- 这个 model-viewer 是公用的，会根据点击切换 src -->
+        <div id="modalContainer" style="width: 85%; height: 85%; background-color: #1e1e1e; border-radius: 8px; position: relative;">
+            <!-- JS 会在这里动态插入 model-viewer -->
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. Gallery 初始化逻辑 (保持不变) ---
+            function setupGallery(scrollerId, leftBtnId, rightBtnId) {
+                const scroller = document.getElementById(scrollerId);
+                const btnLeft = document.getElementById(leftBtnId);
+                const btnRight = document.getElementById(rightBtnId);
+                if (!scroller || !btnLeft || !btnRight) return;
+
+                const modelCards = scroller.querySelectorAll('.model-card');
+                if(modelCards.length > 0) {
+                    modelCards.forEach(card => scroller.appendChild(card.cloneNode(true)));
+                }
+
+                setTimeout(() => {
+                    if (modelCards.length === 0) return;
+                    const originalWidth = scroller.scrollWidth / 2;
+                    const modelWidth = modelCards[0].offsetWidth; 
+                    const scrollDistance = modelWidth + 30;
+                    scroller.scrollLeft = originalWidth; 
+
+                    let isScrolling = false;
+                    const handleScroll = (direction) => {
+                        if (isScrolling) return;
+                        isScrolling = true;
+                        let targetScroll = scroller.scrollLeft + (direction * scrollDistance);
+                        if (direction > 0 && targetScroll >= scroller.scrollWidth - scroller.clientWidth - 10) { 
+                            scroller.scrollLeft -= originalWidth; 
+                            targetScroll = scroller.scrollLeft + scrollDistance;
+                        } else if (direction < 0 && targetScroll <= 0) {
+                            scroller.scrollLeft += originalWidth;
+                            targetScroll = scroller.scrollLeft - scrollDistance;
+                        }
+                        scroller.scroll({ left: targetScroll, behavior: 'smooth' });
+                        setTimeout(() => { isScrolling = false; }, 300);
+                    };
+                    btnRight.addEventListener('click', () => handleScroll(1));
+                    btnLeft.addEventListener('click', () => handleScroll(-1));
+                }, 200);
+            }
+
+            setupGallery('modelScroller', 'scrollLeft', 'scrollRight');
+            // 如果有第二个 Gallery，记得解开下面这行
+            setupGallery('modelScroller2', 'scrollLeft2', 'scrollRight2');
+
+
+            const modal = document.getElementById("modelModal");
+            const modalContainer = document.getElementById("modalContainer"); // 获取那个空容器
+            const closeBtn = document.querySelector(".close-modal");
+
+            // 定义全局函数
+            window.openModel = function(modelSrc) {
+                // 1. 显示 Modal 背景
+                modal.style.display = "flex";
+                setTimeout(() => modal.classList.add("show"), 10);
+                
+                // 2. ★★★ 核心修改：动态创建全新的 model-viewer ★★★
+                // 每次打开都生成一个新的标签，保证交互功能是满血状态
+                modalContainer.innerHTML = `
+                    <model-viewer 
+                        src="${modelSrc}" 
+                        camera-controls 
+                        auto-rotate
+                        shadow-intensity="0"
+                        environment-image="neutral" 
+                        flat-shading
+                        reveal="auto"
+                        loading="eager"
+                        style="width: 100%; height: 100%; border-radius: 8px;"
+                    >
+                    </model-viewer>
+                `;
+            }
+
+            function closeModal() {
+                modal.classList.remove("show");
+                setTimeout(() => {
+                    modal.style.display = "none";
+                    
+                    // 3. ★★★ 核心修改：销毁组件 ★★★
+                    // 直接清空容器 HTML，彻底销毁 WebGL 上下文和事件监听器
+                    modalContainer.innerHTML = ""; 
+                }, 300);
+            }
+
+            closeBtn.onclick = closeModal;
+            
+            // 点击背景关闭
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            }
+        });
+
+        // Tab Switcher
+        function switchTabs(event) {
+            const clickedButton = event.target;
+            if (!clickedButton.dataset.tab) return; 
+            const targetTabId = clickedButton.dataset.tab;
+            document.querySelectorAll('.tab-navigation .active').forEach(element => element.classList.remove('active'));
+            document.querySelectorAll('.tab-content.active').forEach(content => content.classList.remove('active'));
+            clickedButton.classList.add('active');
+            document.getElementById(targetTabId).classList.add('active');
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.tab-button').forEach(button => button.addEventListener('click', switchTabs));
+        });
+    </script>
+
+</body>
+</html>
