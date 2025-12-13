@@ -1,5 +1,5 @@
 # 工作流的名称
-name: Build and Deploy GitHub Pages
+name: Build and Deploy Jekyll site to GitHub Pages
 
 # 触发条件：当有 push 到 main 分支时运行
 on:
@@ -19,33 +19,50 @@ concurrency:
 
 # 工作流包含的任务 (jobs)
 jobs:
+  # 构建任务
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 第1步：检出你的仓库代码，并明确拉取 LFS 文件
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      
+      # 第2步：设置 Ruby 和 Jekyll 环境，并安装依赖
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0' # 大部分 Jekyll 主题兼容此版本
+          bundler-cache: true # 缓存依赖项以加快未来构建速度
+      
+      # 第3步：设置 GitHub Pages
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+        
+      # 第4步：★★★★★ 运行 Jekyll 来构建网站 ★★★★★
+      # 这个命令会读取你的 permalink, 把 _pages/about.md 编译成 _site/index.html
+      - name: Build with Jekyll
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+          
+      # 第5步：上传构建好的网站产物 (注意路径是 ./_site)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
   # 部署任务
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    needs: build # 部署任务必须等待构建任务成功
     steps:
-      # ★★★★★ 关键步骤 ★★★★★
-      # 这是检出你仓库代码的步骤
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          # 明确告诉它要下载 LFS 文件！
-          lfs: true
-      
-      # 设置 Pages
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      # 构建你的网站（这里是上传整个仓库作为静态网站）
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # 从仓库根目录上传
-          path: '.'
-
-      # 部署到 GitHub Pages
+      # 部署之前上传的网站产物
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
