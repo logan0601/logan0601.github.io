@@ -1,0 +1,51 @@
+# 工作流的名称
+name: Build and Deploy GitHub Pages
+
+# 触发条件：当有 push 到 main 分支时运行
+on:
+  push:
+    branches: ["main"]
+
+# 允许此工作流创建和写入 GitHub Pages 的部署
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 设置并发控制，防止多个工作流同时部署
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+# 工作流包含的任务 (jobs)
+jobs:
+  # 部署任务
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # ★★★★★ 关键步骤 ★★★★★
+      # 这是检出你仓库代码的步骤
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # 明确告诉它要下载 LFS 文件！
+          lfs: true
+      
+      # 设置 Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # 构建你的网站（这里是上传整个仓库作为静态网站）
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 从仓库根目录上传
+          path: '.'
+
+      # 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
