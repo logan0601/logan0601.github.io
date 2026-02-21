@@ -35,7 +35,7 @@ My research interest lies in multi-modal generative models, 3D generation, compu
 
 <a href='https://scholar.google.com/citations?user=xvOPuFcAAAAJ&hl'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>
 
-<div class='paper-box'><div class='paper-box-image'><div><img src='images/topomesh.png' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2026</div><img src='images/topomesh.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 [TopoMesh: High-Fidelity Mesh Autoencoding via Topological Unification](../projects/topomesh/index.html)
 
@@ -48,7 +48,7 @@ My research interest lies in multi-modal generative models, 3D generation, compu
 </div>
 </div>
 
-<div class='paper-box'><div class='paper-box-image'><div><img src='images/lafite.png' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2026</div><img src='images/lafite.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 [LaFiTe: A Generative Latent Field for 3D Native Texturing](https://arxiv.org/pdf/2512.04786)
 
