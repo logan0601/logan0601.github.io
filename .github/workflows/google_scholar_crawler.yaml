@@ -41,7 +41,8 @@ jobs:
             exit 1
           fi
 
-          python google_scholar_crawler/main.py
+          cd google_scholar_crawler
+          python main.py
 
       - name: Publish stats to google-scholar-stats branch
         env:
