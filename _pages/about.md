@@ -80,6 +80,19 @@ Threestudio Team
 
 <a href='https://scholar.google.com/citations?user=xvOPuFcAAAAJ&hl'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>
 
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">NIPS 2026</div><img src='images/pygmalion.png' alt="Pygmalion" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+[Pygmalion: Bridging Reconstruction and Generation in Sparse Voxel-based 3D Modeling](https://pygmalionanonymous.github.io/)
+
+**Guan Luo**, Jing Lin, Xuanyu Yi, Jiahang Liu, Song-Hai Zhang, Jianfeng Zhang
+
+[**Project Page**](https://pygmalionanonymous.github.io/)
+
+- We introduce Pygmalion, a sparse voxel autoencoding framework that bridges high-fidelity reconstruction and robust 3D generation. Its coupled SDF parameterization turns decoding perturbations into smooth geometric changes, while sign correction, geometry supervision, and rendering refinement help produce complete surfaces with sharp features and fine details.
+
+</div>
+</div>
+
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2026</div><img src='images/topomesh.png' alt="TopoMesh" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 [TopoMesh: High-Fidelity Mesh Autoencoding via Topological Unification](../projects/topomesh/index.html)
